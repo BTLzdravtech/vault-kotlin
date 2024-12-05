@@ -90,13 +90,13 @@ class AuthToken(private val conf: VaultConfiguration) {
     throw VaultException(errorMessage)
   }
 
-  fun revokeSelf(): Int {
+  fun revokeSelf(): Boolean {
     val (request, response, result) = (conf.adddress + "/v1/auth/token/revoke-self")
         .httpPost()
         .header(Pair("X-Vault-Token", conf.token))
         .response()
 
-    return response.httpStatusCode
+    return true
   }
 
   fun revokeOrphan(id: String): Boolean {
